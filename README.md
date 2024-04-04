@@ -55,7 +55,7 @@ server {
                 root /home/debian/mysite;            <== this translates to /home/debian/mysite/fruits/index.html
         }
 
-        location /fruits {
+        location /vegetables {
                 root /home/debian/mysite;
                 try_files /vegetables/veggies.html /index.html =404     <== Try looking for veggies.html. If not, redirect to main index.html. Else throw 404 error.
         }
@@ -65,5 +65,23 @@ server {
 
 
 ## Rewrites and redirects
+
+`Code 307` specifies that we want to redirect it to another route.
+
+```bash
+server {
+        listen 8080;
+        root /home/debian/mysite;
+
+        location /fruits {
+                root /home/debian/mysite; 
+        }
+
+        location /crops {
+                return 307 /fruits        <== redirect codde 307
+        }
+}
+
+```
 
 
