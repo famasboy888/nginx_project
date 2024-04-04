@@ -15,6 +15,9 @@ events {
 }
 ```
 
+## Commands
+
+`sudo nginx -s reload`
 
 <hr>
 
@@ -82,6 +85,36 @@ server {
         }
 }
 
+```
+<hr>
+
+# NGINX as LoadBalancer
+
+This will create a round robin load balancer
+
+```bash
+http {
+        include mime.types;
+
+        upstream backendserver {                                        <== You can use any name but remember it. Name should be used in "proxy_pass" directive
+                server 192.168.2.77:1111;                                <== Specify all ports here
+                server 192.168.2.77:2222;
+                server 192.168.2.77:3333;
+                server 192.168.2.77:4444;
+        }
+
+        server {
+                listen 8080;
+
+                location / {
+                        proxy_pass http://backendserver/;                <== Declare "proxy_pass" here and follow the syntax.
+                }
+        }
+}
+
+events {
+
+}
 ```
 
 
